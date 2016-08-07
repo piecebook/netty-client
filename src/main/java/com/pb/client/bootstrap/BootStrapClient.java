@@ -8,6 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -22,27 +23,23 @@ import com.server.model.loginMsg;
 public class BootStrapClient {
 	private SocketChannel channel = null;
 
+    private int maxFrameLength = 1048;
+    private int lengthFieldOffset = 0;
+    private int lengthFieldLength = 4;
+    private int lengthAdjustment = 4;
+    private int initialBytesToStrip = 0;
+
 	public boolean login(String user, String pwd) {
 		if (channel == null) {
 			System.out.println("Connect first!");
 			return false;
 		} else {
-			loginMsg msg = new loginMsg();
-			msg.setTitle("login");
-			msg.setType("login");
-			msg.setReceiver_uid("pb system");
+			Message msg = new Message();
 
-			msg.setTime(System.currentTimeMillis());
-			msg.setSender_uid(user);
-			msg.setContent(pwd);
-			System.out.println(channel.remoteAddress());
-
-			// login msg
-			msg.setDeviceId(user + "@ver1.0");
-			msg.setClientVersion("ver1.0");
-			msg.setChannel("android");
-			msg.setDeviceModel("mx2");
-			msg.setSystemVersion("android 5.0");
+            msg.setType(PBCONSTANT.LOGIN_FLAG);
+            msg.setParam("s_uid", user);
+            msg.setParam("pwd", pwd);
+            msg.setParam("r_uid", PBCONSTANT.SYSTEM);
 			channel.writeAndFlush(msg);
 			System.out.println("login:"+msg.toString());
 			while (true) {
@@ -70,11 +67,12 @@ public class BootStrapClient {
 				@Override
 				protected void initChannel(SocketChannel channel)
 						throws Exception {
-					channel.pipeline().addLast(new ObjectEncoder());
+					channel.pipeline().addLast(new MessageEncoder());
+					//channel.pipeline().addLast(new ObjectEncoder());
 					// channel.pipeline().addLast(new MessageDecoder());
-					channel.pipeline().addLast(
-							new ObjectDecoder(ClassResolvers
-									.cacheDisabled(null)));
+					//channel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+					channel.pipeline().addLast(new LengthFieldBasedFrameDecoder(maxFrameLength,lengthFieldOffset,lengthFieldLength,lengthAdjustment,initialBytesToStrip));
+					channel.pipeline().addLast(new MessageDecoder());
 					channel.pipeline().addLast(new clientHandler());
 
 				}
