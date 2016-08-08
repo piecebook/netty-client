@@ -2,7 +2,8 @@ package com.server.model;
 
 import java.io.Serializable;
 
-public class loginMsg extends Message{
+public class loginMsg extends Message implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String deviceId;// 客户端id,用户id+“@”+终端版本
 	private String channel;// 终端设备类型
 	private String deviceModel;// 终端设备型号
@@ -92,18 +93,5 @@ public class loginMsg extends Message{
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "loginMsg{" +
-				"deviceId='" + deviceId + '\'' +
-				", channel='" + channel + '\'' +
-				", deviceModel='" + deviceModel + '\'' +
-				", clientVersion='" + clientVersion + '\'' +
-				", systemVersion='" + systemVersion + '\'' +
-				", longitude=" + longitude +
-				", latitude=" + latitude +
-				", location='" + location + '\'' +
-				", status=" + status +
-				'}';
-	}
+
 }

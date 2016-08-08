@@ -9,7 +9,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 
 public class clientHandler extends SimpleChannelInboundHandler<Message> {
 
-	@Override
+	/*@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
 			throws Exception {
 		if (evt instanceof IdleStateEvent) {
@@ -29,7 +29,7 @@ public class clientHandler extends SimpleChannelInboundHandler<Message> {
 				break;
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
@@ -40,16 +40,24 @@ public class clientHandler extends SimpleChannelInboundHandler<Message> {
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message msg)
 			throws Exception {
-		if (msg.getType().equals(PBCONSTANT.LOGIN_REPLY)) {
-			if (msg.getContent().equals(PBCONSTANT.SUCCESS)) {
-				System.out.println("Login Success!");
-				PBCONSTANT.flag = 1;
-			} else {
-				PBCONSTANT.flag = -1;
-			}
-		} else {
-			System.out.println("From " + msg.getSender_uid() + " :"
-					+ msg.getContent());
+		switch (msg.getType()) {
+			case PBCONSTANT.LOGIN_REPLY_FLAG:
+				if (msg.get("st").equals("sc")) {
+					System.out.println("Login Success!");
+					PBCONSTANT.flag = 1;
+				} else {
+					PBCONSTANT.flag = -1;
+				}
+				break;
+			case PBCONSTANT.MESSAGE_REPLY_FLAG:
+				System.out.println("From " + msg.get("s_uid") + " :"
+						+ msg.get("st"));
+				break;
+			case PBCONSTANT.MESSAGE_FLAG:
+				System.out.println("From " + msg.get("s_uid") + " :"
+						+ msg.get("msg"));
+				break;
+			default:
 		}
 	}
 
