@@ -2,8 +2,7 @@ package com.server.model;
 
 import java.io.Serializable;
 
-public class loginMsg extends Message implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class loginMsg extends Message{
 	private String deviceId;// 客户端id,用户id+“@”+终端版本
 	private String channel;// 终端设备类型
 	private String deviceModel;// 终端设备型号
@@ -95,22 +94,16 @@ public class loginMsg extends Message implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version='1.0' encoding='UTF-8'?>");
-		buffer.append("<Stream from='").append(this.getSender_uid()).append("' to='").append(this.getReceiver_uid()).append("'>");
-		buffer.append("<message type='").append(this.getType()).append("'>");
-		buffer.append("<title>").append(this.getTitle()).append("</title>");
-		buffer.append("<content>").append(this.getContent()).append("</content>");
-		buffer.append("<time>").append(this.getTime()).append("</time>");
-		buffer.append("<deviceId>").append(this.getDeviceId()).append("</deviceId>");
-		buffer.append("<channel>").append(this.getChannel()).append("</channel>");
-		buffer.append("<deviceModel>").append(this.getDeviceModel()).append("</deviceModel>");
-		buffer.append("<clientVersion>").append(this.getClientVersion()).append("</clientVersion>");
-		buffer.append("<systemVersion>").append(this.getSystemVersion()).append("</systemVersion>");
-		buffer.append("<longitude>").append(this.getLongitude()).append("</longitude>");
-		buffer.append("<latitude>").append(this.getLatitude()).append("</latitude>");
-		buffer.append("<status>").append(this.getStatus()).append("<status>");
-		buffer.append("</message></Stream>");
-		return buffer.toString();
+		return "loginMsg{" +
+				"deviceId='" + deviceId + '\'' +
+				", channel='" + channel + '\'' +
+				", deviceModel='" + deviceModel + '\'' +
+				", clientVersion='" + clientVersion + '\'' +
+				", systemVersion='" + systemVersion + '\'' +
+				", longitude=" + longitude +
+				", latitude=" + latitude +
+				", location='" + location + '\'' +
+				", status=" + status +
+				'}';
 	}
 }

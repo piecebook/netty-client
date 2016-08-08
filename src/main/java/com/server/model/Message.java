@@ -1,9 +1,7 @@
 package com.server.model;
 
-import java.io.Serializable;
 
-public class Message implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Message{
 	private String type;// 消息类型
 	private String title;// 消息标题
 	private String content;// 消息内容
@@ -61,16 +59,13 @@ public class Message implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("<?xml version='1.0' encoding='UTF-8'?>");
-		buffer.append("<Stream from='").append(sender_uid).append("' to='")
-				.append(receiver_uid).append("'>");
-		buffer.append("<message type='").append(type).append("'>");
-		buffer.append("<content>").append(content).append("</content>");
-		buffer.append("<time>").append(time).append("</time>");
-		buffer.append("</message>");
-		buffer.append("</Stream>");
-		return buffer.toString();
+		return "Message{" +
+				"type='" + type + '\'' +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", time=" + time +
+				", sender_uid='" + sender_uid + '\'' +
+				", receiver_uid='" + receiver_uid + '\'' +
+				'}';
 	}
-
 }

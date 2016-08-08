@@ -9,7 +9,8 @@ import com.server.model.Message;
 
 public class nettyClient {
 	private static final int PORT = 8000;
-	private static final String HOST = "DW-PC";
+	//private static final String HOST = "172.26.84.27";
+	private static final String HOST = "localhost";
 
 	public static void main(String[] args) {
 		BootStrapClient client = new BootStrapClient();
@@ -50,6 +51,7 @@ public class nettyClient {
 			msg.setType("message");
 			msg.setTime(System.currentTimeMillis());
 			client.getChannel().writeAndFlush(msg);
+
 		}
 	}
 

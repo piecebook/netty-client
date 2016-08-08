@@ -32,6 +32,12 @@ public class clientHandler extends SimpleChannelInboundHandler<Message> {
 	}
 
 	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		super.channelInactive(ctx);
+		System.out.println("inactive");
+	}
+
+	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message msg)
 			throws Exception {
 		if (msg.getType().equals(PBCONSTANT.LOGIN_REPLY)) {

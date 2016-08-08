@@ -12,15 +12,18 @@ import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
+import java.util.concurrent.TimeUnit;
 import com.pb.client.constant.PBCONSTANT;
-import com.pb.client.filter.MessageDecoder;
-import com.pb.client.filter.MessageEncoder;
 import com.pb.client.handler.clientHandler;
-import com.server.model.Message;
 import com.server.model.loginMsg;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class BootStrapClient {
 	private SocketChannel channel = null;
+	private static final int READ_IDEL_TIME_OUT = 4; // 读超时
+	private static final int WRITE_IDEL_TIME_OUT = 5;// 写超时
+	private static final int ALL_IDEL_TIME_OUT = 7; // 所有超时
+
 
 	public boolean login(String user, String pwd) {
 		if (channel == null) {
@@ -75,6 +78,7 @@ public class BootStrapClient {
 					channel.pipeline().addLast(
 							new ObjectDecoder(ClassResolvers
 									.cacheDisabled(null)));
+					channel.pipeline().addLast(new IdleStateHandler(READ_IDEL_TIME_OUT,WRITE_IDEL_TIME_OUT, ALL_IDEL_TIME_OUT, TimeUnit.SECONDS));
 					channel.pipeline().addLast(new clientHandler());
 
 				}
