@@ -1,6 +1,7 @@
 package com.pb.client.handler;
 
-import com.pb.client.constant.PBCONSTANT;
+import com.pb.server.session.PBSession;
+import com.server.constant.PBCONSTANT;
 import com.server.model.Message;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -8,7 +9,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 
 public class clientHandler extends SimpleChannelInboundHandler<Message> {
-
+	private MessageHandler messageHandler = new MessageHandler();
 	/*@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
 			throws Exception {
@@ -54,8 +55,9 @@ public class clientHandler extends SimpleChannelInboundHandler<Message> {
 						+ msg.get("st"));
 				break;
 			case PBCONSTANT.MESSAGE_FLAG:
-				System.out.println("From " + msg.get("s_uid") + " :"
-						+ msg.get("msg"));
+				PBSession session = new PBSession();
+				session.setSession(ctx.channel());
+				messageHandler.process(session, msg);
 				break;
 			default:
 		}

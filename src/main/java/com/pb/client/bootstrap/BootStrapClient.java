@@ -1,5 +1,6 @@
 package com.pb.client.bootstrap;
 
+import com.server.constant.PBCONSTANT;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,16 +10,11 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 
-import com.pb.client.constant.PBCONSTANT;
 import com.pb.client.filter.MessageDecoder;
 import com.pb.client.filter.MessageEncoder;
 import com.pb.client.handler.clientHandler;
 import com.server.model.Message;
-import com.server.model.loginMsg;
 
 public class BootStrapClient {
 	private SocketChannel channel = null;
@@ -26,7 +22,7 @@ public class BootStrapClient {
     private int maxFrameLength = 1048;
     private int lengthFieldOffset = 0;
     private int lengthFieldLength = 4;
-    private int lengthAdjustment = 4;
+    private int lengthAdjustment = 5;
     private int initialBytesToStrip = 0;
 
 	public boolean login(String user, String pwd) {
@@ -37,6 +33,7 @@ public class BootStrapClient {
 			Message msg = new Message();
 
             msg.setType(PBCONSTANT.LOGIN_FLAG);
+			msg.setMsg_id(PBCONSTANT.getMsg_id());
             msg.setParam("s_uid", user);
             msg.setParam("pwd", pwd);
             msg.setParam("r_uid", PBCONSTANT.SYSTEM);

@@ -137,5 +137,12 @@ public class PBSession {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	public boolean write(Object msg) {
+		if (session != null) {
+			return session.writeAndFlush(msg).awaitUninterruptibly(5000);
+		}
+
+		return false;
+	}
 
 }

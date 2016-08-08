@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.pb.client.bootstrap.BootStrapClient;
-import com.pb.client.constant.PBCONSTANT;
+import com.server.constant.PBCONSTANT;
 import com.server.model.Message;
 
 public class nettyClient {
     private static final int PORT = 8000;
-    private static final String HOST = "123.207.120.73";
+    //private static final String HOST = "123.207.120.73";
+    private static final String HOST = "127.0.0.1";
 
     public static void main(String[] args) {
         BootStrapClient client = new BootStrapClient();
@@ -45,6 +46,7 @@ public class nettyClient {
             }
             Message msg = new Message();
             msg.setType(PBCONSTANT.MESSAGE_FLAG);
+            msg.setMsg_id(PBCONSTANT.getMsg_id());
             msg.setParam("s_uid", user);
             msg.setParam("msg", content);
             msg.setParam("r_uid", receiver);
