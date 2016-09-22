@@ -7,7 +7,7 @@ public class Message {
 	private byte encode;// 数据编码格式。已定义：0：UTF-8，1：GBK，2：GB2312，3：ISO8859-1
 	private byte enzip;// 加密类型。0表示不加密
 	private int length;// 消息体长度
-	private int msg_id;// 消息id
+	private long msg_id;// 消息id
 	private HashMap<String, String> content = new HashMap<String, String>();
 
 	public Message() {
@@ -47,11 +47,11 @@ public class Message {
 		this.length = length;
 	}
 
-	public int getMsg_id() {
+	public long getMsg_id() {
 		return msg_id;
 	}
 
-	public void setMsg_id(int msg_id){ this.msg_id = msg_id; }
+	public void setMsg_id(long msg_id){ this.msg_id = msg_id; }
 
 	public HashMap<String, String> getContent() {
 		return content;
@@ -76,8 +76,8 @@ public class Message {
 				", encode=" + encode +
 				", enzip=" + enzip +
 				", length=" + length +
-				", msg_id=" + msg_id+
-				", content=" + content.toString() +
+				", msg_id=" + msg_id +
+				", content=" + content +
 				'}';
 	}
 }

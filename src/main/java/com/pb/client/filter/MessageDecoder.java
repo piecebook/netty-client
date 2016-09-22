@@ -1,13 +1,12 @@
 package com.pb.client.filter;
 
-import java.util.List;
-
 import com.pb.client.util.PBProtocol;
 import com.server.model.Message;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+
+import java.util.List;
 
 public class MessageDecoder extends ByteToMessageDecoder {
 
@@ -18,7 +17,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		byte encode = inbuf.readByte();
 		byte enzip = inbuf.readByte();
 		byte type = inbuf.readByte();
-		short msg_id = inbuf.readShort();
+		long msg_id = inbuf.readLong();
 		Message msg = new Message();
 		msg.setEncode(encode);
 		msg.setEnzip(enzip);

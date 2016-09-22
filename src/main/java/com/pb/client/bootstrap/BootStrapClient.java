@@ -22,7 +22,7 @@ public class BootStrapClient {
     private int maxFrameLength = 1048;
     private int lengthFieldOffset = 0;
     private int lengthFieldLength = 4;
-    private int lengthAdjustment = 5;
+    private int lengthAdjustment = 11;
     private int initialBytesToStrip = 0;
 
 	public boolean login(String user, String pwd) {
