@@ -12,7 +12,7 @@ public class MessageHandler {
         System.out.println("From " + msg.get("s_uid") + " :"
                 + msg.toString());
         Message reply = new Message();
-        String msg_key = msg.get("s_uid") + msg.getMsg_id();
+        String msg_key = msg.get("s_uid")+ "-" + msg.getMsg_id();
         reply.setParam("msg_key", msg_key);
         reply.setMsg_id(PBCONSTANT.getMsg_id());
         reply.setType(PBCONSTANT.ACK_FLAG);

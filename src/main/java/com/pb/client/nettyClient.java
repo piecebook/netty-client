@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 
 public class nettyClient {
     private static final int PORT = 8000;
-    private static final String HOST = "123.207.120.73";
-    //private static final String HOST = "127.0.0.1";
+    //private static final String HOST = "123.207.120.73";
+    private static final String HOST = "127.0.0.1";
 
     public static void main(String[] args) {
         BootStrapClient client = new BootStrapClient();
